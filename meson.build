@@ -1,4 +1,4 @@
-project('helloworld', 'c')
+project('helloworld', 'c', default_options: ['buildtype=release'])
 
 deps_dynamic = []
 
