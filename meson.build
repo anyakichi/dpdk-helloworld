@@ -1,25 +1,19 @@
 project('helloworld', 'c', default_options: ['buildtype=release'])
 
 deps_dynamic = []
+deps_static = []
 
 sources = files(
   'main.c'
 )
 
-dpdk = dependency('libdpdk')
-deps_dynamic += dpdk
+deps_dynamic += dependency('libdpdk')
+deps_static += dependency('libdpdk', static: true)
+
+# Workaround for link failure
+deps_static += dependency('libsystemd')
+deps_static += dependency('libisal', required: false)
 
 executable('helloworld-dynamic', sources, dependencies: deps_dynamic)
-
-# dependency('libdpdk', static: true) doesn't work intendedly.  Dynamic link
-# libraries which are required by DPDK library are not linked.
-# Use pkg-config directly for workaround.
-pkgconfig = find_program('pkg-config')
-
-cflags_cmd = run_command(pkgconfig, '--cflags', 'libdpdk', check: true)
-cflags = cflags_cmd.stdout().split()
-
-ldflags_cmd = run_command(pkgconfig, '--static', '--libs', 'libdpdk', check: true)
-ldflags = ldflags_cmd.stdout().split()
-
-executable('helloworld-static', sources, c_args: cflags, link_args: ldflags)
+executable('helloworld-static', sources, dependencies: deps_static,
+  link_args: ['-Wl,--allow-multiple-definition'])

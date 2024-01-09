@@ -10,9 +10,8 @@ Install DPDK.
 $ buildenv dpdk-install -y
 ```
 
-Execute meson in dpdk directory.
+Switch to dpdk-helloworld directory.
 
 ```
 $ cd dpdk-helloworld
-$ meson setup build
 ```
