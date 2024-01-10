@@ -10,10 +10,6 @@ sources = files(
 deps_dynamic += dependency('libdpdk')
 deps_static += dependency('libdpdk', static: true)
 
-# Workaround for link failure
-deps_static += dependency('libsystemd')
-deps_static += dependency('libisal', required: false)
-
 executable('helloworld-dynamic', sources, dependencies: deps_dynamic)
 executable('helloworld-static', sources, dependencies: deps_static,
   link_args: ['-Wl,--allow-multiple-definition'])

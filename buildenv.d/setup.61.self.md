@@ -1,5 +1,5 @@
 Execute meson setup.
 
 ```
-$ meson setup build
+$ meson setup ${MESON_OPTS} build
 ```
