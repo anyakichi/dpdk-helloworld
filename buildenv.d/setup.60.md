@@ -1,7 +1,7 @@
 Check the current directory.
 
 ```
-$ [[ ${PWD##*/} == dpdk-helloworld ]] && return 0
+$ [[ \$WORKDIR == \$PWD ]] || return 0
 ```
 
 Install DPDK.
