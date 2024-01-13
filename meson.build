@@ -1,6 +1,5 @@
 project('helloworld', 'c',
-  default_options: ['warning_level=2'],
-  meson_version: '>=0.60.0')
+  default_options: ['warning_level=2'])
 
 sources = files(
   'main.c'
