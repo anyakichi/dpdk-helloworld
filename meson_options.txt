@@ -1,0 +1,1 @@
+option('dpdk-static', type: 'boolean', value: true, description: 'Link DPDK statically')

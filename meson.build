@@ -1,15 +1,23 @@
-project('helloworld', 'c', default_options: ['buildtype=release'])
-
-deps_dynamic = []
-deps_static = []
+project('helloworld', 'c',
+  default_options: ['warning_level=2'],
+  meson_version: '>=0.60.0')
 
 sources = files(
   'main.c'
 )
 
-deps_dynamic += dependency('libdpdk')
-deps_static += dependency('libdpdk', static: true)
+dpdk = dependency('libdpdk')
 
-executable('helloworld-dynamic', sources, dependencies: deps_dynamic)
-executable('helloworld-static', sources, dependencies: deps_static,
-  link_args: ['-Wl,--allow-multiple-definition'])
+if get_option('dpdk-static')
+  pkgconfig = find_program('pkg-config')
+
+  cflags_cmd = run_command(pkgconfig, '--cflags', 'libdpdk', check: true)
+  cflags = cflags_cmd.stdout().split()
+
+  ldflags_cmd = run_command(pkgconfig, '--static', '--libs', 'libdpdk', check: true)
+  ldflags = ldflags_cmd.stdout().split()
+
+  executable('helloworld', sources, c_args: cflags, link_args: ldflags)
+else
+  executable('helloworld', sources, dependencies: [dpdk])
+endif
