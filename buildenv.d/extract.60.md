@@ -1,3 +1,7 @@
+```
+$(buildenv dpdk-extract -d)
+```
+
 Clone the repository.
 
 ```

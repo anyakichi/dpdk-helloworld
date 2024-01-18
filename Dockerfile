@@ -4,7 +4,7 @@ FROM ${base}
 RUN \
     cd /etc/buildenv.d \
     && ls \
-    && for i in build.* install.* setup.*; do \
+    && for i in build.* extract.* install.* setup.*; do \
         mv $i dpdk-$i; \
        done \
     ;  sed -i 's/buildenv setup/buildenv dpdk-setup/' /etc/buildenv.d/dpdk-build.40.md \
@@ -16,9 +16,9 @@ COPY buildenv.d/ /etc/buildenv.d/
 
 RUN \
     if [ -e /etc/buildenv.d/extract-sysroot.40.md ]; then \
-        rm /etc/buildenv.d/setup.61.self.md; \
+        rm /etc/buildenv.d/*.61.self.md; \
     else \
-        rm /etc/buildenv.d/setup.61.cross.md; \
+        rm /etc/buildenv.d/*.61.cross.md; \
     fi
 
 ARG dpdk_meson_opts=""
