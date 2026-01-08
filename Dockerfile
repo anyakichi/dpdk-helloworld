@@ -22,7 +22,7 @@ RUN \
     fi
 
 ARG dpdk_meson_opts=""
-ARG dpdk_rev=v23.11
+ARG dpdk_rev=v25.11
 ARG meson_opts=""
 ENV \
     DPDK_GIT_URL=https://dpdk.org/git/dpdk-stable \
