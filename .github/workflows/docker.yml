@@ -10,12 +10,16 @@ jobs:
         tag:
           - main
           - main-cross
+          - main-trixie
+          - main-trixie-cross
           - main-bookworm
           - main-bookworm-cross
+          - main-resolute
+          - main-resolute-cross
+          - main-noble
+          - main-noble-cross
           - main-jammy
           - main-jammy-cross
-          - main-focal
-          - main-focal-cross
     steps:
       - run: |
           TAG="${{ matrix.tag }}"
