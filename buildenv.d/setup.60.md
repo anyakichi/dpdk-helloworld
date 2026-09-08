@@ -5,7 +5,7 @@
 Switch to the dpdk-helloworld directory.
 
 ```
-$ cd ${WORKDIR}/dpdk-helloworld
+$ cd ../dpdk-helloworld
 ```
 
 Execute meson setup.  In the cross image, the environment and the
