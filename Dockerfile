@@ -1,25 +1,18 @@
 ARG base=ghcr.io/anyakichi/dpdk-builder:main-cross
 FROM ${base}
 
+# The documents of dpdk-builder are put under the dpdk- prefix, the
+# inclusions among them as well, so that the documents of this image
+# can include them by that name and be the extract, setup and build of
+# their own.
 RUN \
     cd /etc/buildenv.d \
-    && ls \
-    && for i in build.* extract.* install.* setup.*; do \
-        mv $i dpdk-$i; \
+    && for i in *; do \
+        mv "$i" "dpdk-$i"; \
        done \
-    ;  sed -i 's/buildenv setup/buildenv dpdk-setup/' /etc/buildenv.d/dpdk-build.40.md \
-    && sed -i 's/buildenv setup/buildenv dpdk-setup/' /etc/buildenv.d/dpdk-install.40.md \
-    && sed -i 's/buildenv build/buildenv dpdk-build/' /etc/buildenv.d/dpdk-install.40.md \
-    && sed -i 's/^DOTCMDS="\?\([^"]*\)"\?/DOTCMDS="\1 dpdk-setup"/' /etc/buildenv.conf
+    && sed -i -E 's/(\{%-?[[:space:]]*include[[:space:]]+)/\1dpdk-/' *
 
 COPY buildenv.d/ /etc/buildenv.d/
-
-RUN \
-    if [ -e /etc/buildenv.d/extract-sysroot.40.md ]; then \
-        rm /etc/buildenv.d/*.61.self.md; \
-    else \
-        rm /etc/buildenv.d/*.61.cross.md; \
-    fi
 
 ARG dpdk_meson_opts=""
 ARG dpdk_rev=v25.11

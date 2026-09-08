@@ -1,17 +1,23 @@
-Check the current directory.
+{% if "${PWD}" == "${WORKDIR}" -%}
+
+{% include dpdk-install %}
+
+Switch to the dpdk-helloworld directory.
 
 ```
-$ [[ \$WORKDIR == \$PWD ]] || return 0
+$ cd ${WORKDIR}/dpdk-helloworld
 ```
 
-Install DPDK.
+Execute meson setup.  In the cross image, the environment and the
+machine files of DPDK are used, so that helloworld is built against
+the same sysroot, or with the same compiler, as DPDK was.
 
 ```
-$ buildenv dpdk-install -y
+{% if "$(command -v meson-cross-env)" -%}
+$ $(meson-cross-env) meson setup $(meson-cross-opts) ${MESON_OPTS} build
+{%- else -%}
+$ meson setup ${MESON_OPTS} build
+{%- endif %}
 ```
 
-Switch to dpdk-helloworld directory.
-
-```
-$ cd dpdk-helloworld
-```
+{% endif %}

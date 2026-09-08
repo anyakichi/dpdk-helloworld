@@ -1,6 +1,4 @@
-```
-$(buildenv dpdk-extract -d)
-```
+{% include dpdk-extract %}
 
 Clone the repository.
 
