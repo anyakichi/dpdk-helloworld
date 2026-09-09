@@ -18,7 +18,6 @@ ARG dpdk_meson_opts=""
 ARG dpdk_rev=v25.11
 ARG meson_opts=""
 ENV \
-    DPDK_GIT_URL=https://dpdk.org/git/dpdk-stable \
     DPDK_MESON_OPTS=${dpdk_meson_opts} \
     DPDK_REV=${dpdk_rev} \
     MESON_OPTS=${meson_opts}
