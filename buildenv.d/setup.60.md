@@ -14,11 +14,11 @@ sysroot, or with the same compiler, as DPDK was.
 
 ```
 {% if "${CROSS_IMAGE:-}" -%}
-$ meson setup --cross-file ../meson-cross.txt ${MESON_OPTS} build
+$ meson setup --cross-file ../meson-cross.txt${MESON_OPTS:+ ${MESON_OPTS}} build
 {%- elif "$(command -v meson-machine-file)" -%}
-$ meson setup --native-file ../meson-native.txt ${MESON_OPTS} build
+$ meson setup --native-file ../meson-native.txt${MESON_OPTS:+ ${MESON_OPTS}} build
 {%- else -%}
-$ meson setup ${MESON_OPTS} build
+$ meson setup${MESON_OPTS:+ ${MESON_OPTS}} build
 {%- endif %}
 ```
 
